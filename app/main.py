@@ -132,13 +132,10 @@ def get_conected_users():
     if request.method == 'POST':
         post_request = json.loads(request.data.decode())
         user_mac = post_request.get('data').get('mac')
-        
+
 
 
     return jsonify(response), 200
-
-
-def get_conected_users_from_device(mac):
 
 
 
