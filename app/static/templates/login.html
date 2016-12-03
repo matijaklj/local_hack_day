@@ -1,6 +1,6 @@
 <!doctype html>
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="a_atendance">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,8 +13,13 @@
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.css') }}" />
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/main-app.css') }}" />
 
+    <script type="text/javascript" src="../static/js/angular.js"></script>
+    <script type="text/javascript" src="../static/js/app.js"></script>
+    <script type="text/javascript" src="../static/js/ui-bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/js/angular-route.js"></script>
+
 </head>
-<body>
+<body ng-controller="loginPageController">
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -53,19 +58,18 @@
             <div class="panel-body">
                 <div class="form-group">
                     <label for="usr">Username:</label>
-                    <input type="text" class="form-control" placeholder="Username">
+                    <input type="text" class="form-control" placeholder="Username" ng-model="user.username">
                 </div>
                 <div class="form-group">
                     <label for="psw">Password:</label>
-                    <input type="password" class="form-control" placeholder="Password">
+                    <input type="password" class="form-control" placeholder="Password"  ng-model="user.password">
                 </div>
+                <button type="button" class="btn btn-default pull-right" ng-click="login(user)">Login</button>
             </div>
 
         </div>
     </div>
 
-	<script type="text/javascript" src="../static/js/angular.js"></script>
-    <script type="text/javascript" src="../static/js/app.js"></script>
-	<script type="text/javascript" src="../static/js/ui-bootstrap.min.js"></script>
+
 </body>
 </html>

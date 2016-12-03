@@ -16,7 +16,7 @@ app.config(
 	}
 );
 
-app.config( 
+app.config(
 	function($interpolateProvider) {
 		$interpolateProvider.startSymbol('{$').endSymbol('$}');
 	}
@@ -29,12 +29,16 @@ app.controller('loginPageController', [
 	  		'http://' + document.domain + ':' + location.port
 	var url = $scope.base_url + '/login'
 
-	$scope.login = 
-		$http.post(url, { 'data': user })
-			.success(function(response) {
+    $scope.user = {};
+
+	$scope.login =  function(user) {
+        console.log(user.username);
+        $http.post(url, { 'data': user }).then(
+			function(response) {
 				console.log("SUCCESS");
-			})
-			.error(function(response) {
+                $location.path('/index')
+			},
+			function(response) {
     			console.log(response.success);
-  		});	
+  		})};
 }]);
