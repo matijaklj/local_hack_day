@@ -35,12 +35,30 @@ class User(db.Model):
 
 @app.route("/", methods=["POST", "GET"])
 def login():
-    print "Here I am."
-    user1 = User("admin", "admin_name", "something@somewhere.com", "lolekbolek", False)
-    db.session.add(user1)
-    db.session.commit()
-    print "User with name: %s | username: %s" % (user1.name, user1.username)
-    return render_template("index.html")
+    # Login authentication
+    if request.method == 'POST':
+        
+        login_user = request.form.get('data.username', type=str)
+        login_password = request.form.get('data.password', type=str)
+
+        user = User.query.filter(
+            User.username  == str(login_user)).first()
+
+        if login_user != user.username or \
+            login_password != user.password:
+                error = 'You shall not pass'
+        else:
+            # Sesion
+            rp = { 
+                'connected': False,
+                'ip': None,
+                'action': 'connect'
+            }
+            session['rp'] = rp
+            session['logged_in'] = True
+            session['logged_user'] = user.username
+            session['first_log'] = False
+    return render_template
 
 if __name__ == "__main__":
      app.run()
