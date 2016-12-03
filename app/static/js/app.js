@@ -29,11 +29,12 @@ app.controller('loginPageController', [
 	  		'http://' + document.domain + ':' + location.port
 	var url = $scope.base_url + '/login'
 
-	$http.post(url, { 'data': user })
-	.success(function(response) {
-			console.log("SUCCESS");
-		})
-		.error(function(response) {
-    		console.log(response.success);
-  	});	
+	$scope.login = 
+		$http.post(url, { 'data': user })
+			.success(function(response) {
+				console.log("SUCCESS");
+			})
+			.error(function(response) {
+    			console.log(response.success);
+  		});	
 }]);

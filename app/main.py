@@ -1,5 +1,6 @@
 # Global imports
 import os
+import json
 
 from flask import Flask, render_template, \
     request, url_for, redirect, session, flash, g, jsonify
@@ -35,30 +36,35 @@ class User(db.Model):
 
 @app.route("/", methods=["POST", "GET"])
 def login():
+
+    
+    response = {
+        'success': False,
+        'msg': ''
+    }
+    
     # Login authentication
     if request.method == 'POST':
-        
-        login_user = request.form.get('data.username', type=str)
-        login_password = request.form.get('data.password', type=str)
+        post_request = json.loads(request.data.decode())
+        user = post_request.get('user')
+        login_user = request.form.get('user.username', type=str)
+        login_password = request.form.get('user.password', type=str)
 
-        user = User.query.filter(
+        user_q = User.query.filter(
             User.username  == str(login_user)).first()
 
-        if login_user != user.username or \
-            login_password != user.password:
-                error = 'You shall not pass'
-        else:
-            # Sesion
-            rp = { 
-                'connected': False,
-                'ip': None,
-                'action': 'connect'
-            }
-            session['rp'] = rp
-            session['logged_in'] = True
-            session['logged_user'] = user.username
-            session['first_log'] = False
-    return render_template
+        if login_user != user_q.username or \
+            login_password != user_q.password:
+
+            error = 'You shall not pass'
+            response['msg'] = error
+            return jsonify(response), 504
+    else:
+        return render_template("login.html")
+
+    response['success'] = True
+    response['msg'] = "success"
+    return jsonify(response), 200
 
 if __name__ == "__main__":
      app.run()
