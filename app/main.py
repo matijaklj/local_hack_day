@@ -29,72 +29,79 @@ class User(db.Model):
 
     def __init__(self, username, password, name, email, role=False):
         self.username = username
-        self.password = password
         self.name = name
         self.email = email
+        self.password = password
         self.role = role
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-
-    
     response = {
         'success': False,
-        'msg': ''
+        'message': ''
     }
     
     # Login authentication
     if request.method == 'POST':
         post_request = json.loads(request.data.decode())
-        user = post_request.get('user')
-        login_user = request.form.get('user.username', type=str)
-        login_password = request.form.get('user.password', type=str)
+        user = post_request.get('data')
+        login_user = user.get("username")
+        login_password = user.get("password")
 
+        # make query to db
         user_q = User.query.filter(
             User.username  == str(login_user)).first()
 
-        if login_user != user_q.username or \
-            login_password != user_q.password:
-            error = 'You shall not pass'
-            response['msg'] = error
-            return jsonify(response), 504
-    else:
-        return render_template("login.html")
+        if user_q:
+            if login_user != user_q.username or \
+                login_password != user_q.password:
+    
+                error = 'You shall not pass'
+                response['message'] = error
+            else:
+                response['message'] = "OK"
+                response['success'] = True
+        else:
+            response['message'] = 'User does not exist'
 
-    response['success'] = True
-    response['msg'] = "success"
-    return jsonify(response), 200
+        # Load index
+        return render_template("index.html")
+
+    # Get request, load login
+    return render_template("login.html")
 
 @app.route("/index", methods=["POST", "GET"])
-def login():
+def index():
 
-    
     response = {
         'success': False,
-        'msg': ''
+        'message': ''
     }
     
     # Login authentication
     if request.method == 'POST':
         post_request = json.loads(request.data.decode())
-        user = post_request.get('user')
-        login_user = request.form.get('user.username', type=str)
-        login_password = request.form.get('user.password', type=str)
+        user = post_request.get('data')
+        login_user = user.get("username")
+        login_password = user.get("password")
 
+        # make query to db
         user_q = User.query.filter(
             User.username  == str(login_user)).first()
 
-        if login_user != user_q.username or \
-            login_password != user_q.password:
+        if user_q:
+            if login_user != user_q.username or \
+                login_password != user_q.password:
+    
+                error = 'You shall not pass'
+                response['message'] = error
+            else:
+                response['message'] = "OK"
+                response['success'] = True
+                return jsonify(response), 200
+        else:
+            response['message'] = 'User does not exist'
 
-            error = 'You shall not pass'
-            response['msg'] = error
-            return jsonify(response), 504
-    else:
-        return render_template("login.html")
-
-    response['success'] = True
-    response['msg'] = "success"
     return jsonify(response), 200
 
 if __name__ == "__main__":
