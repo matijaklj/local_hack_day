@@ -12,16 +12,16 @@
         </div>
     </div>
     <div class="ucilnica-content col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
-        <div class="student" > <!-- ng-repeat="s in student" -->
+        <div class="student" ng-repeat="s in student">
             <div class="row student-row">
                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
                     <img class="profile-img img-responsive" src="https://placehold.it/50x50" alt="profile image" />
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-3 col-xs-5 text">
-                    <h3>Matija Kljun</h3>
+                    <h3>{$ s.name $}</h3>
                 </div>
                 <div class="pull-right  text" >
-                    <label>last here: 11.11</label>
+                    <label>last here: 3.12.2016 20:11</label>
                 </div>
             </div>
         </div>

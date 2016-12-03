@@ -5,8 +5,8 @@
         </div>
     </div>
     <div class="ucilnice-container">
-        <div class="ucilnica-div" ng-click="displayUcilnica(u.ime)" ng-repeat="(name, value) in ucilnice" >
-            <img class="ucilnica-img" src="static/img/predavalnica.jpg" alt="slika ucilnice" />
+        <div class="ucilnica-div" ng-click="displayUcilnica(name)" ng-repeat="(name, value) in ucilnice" >
+            <img class="ucilnica-img" src="static/img/predavalnica.jpg" alt="slika ucilnice" ng-model="name"/>
             <div class="ucilnica-body">
                 <h1>{$ name $}</h1>
                 <label>{$ value.opis $}</label><br/>

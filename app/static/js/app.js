@@ -34,6 +34,7 @@ app.controller('ucilnicePageController', [
 	function($scope, $http, $location, $rootScope) {
 
 		$scope.ucilnice = {};
+		$rootScope.users = {};
 
 		$scope.base_url = 'http://' + document.domain + ':' + location.port;
 
@@ -51,11 +52,11 @@ app.controller('ucilnicePageController', [
 		$scope.displayUcilnica = function(ime) {
 				console.log(ime);
 
-				$location.path("/ucilnica");
-				$http.post(url, {'name': ime})
+				$http.post(url, { 'name': ime })
 				    .then(function(response) {
-
-						$location.path("/ucilnica");
+				    	$rootScope.users = response.data.users;
+				    	console.log($rootScope.users);
+				    	$location.path("/ucilnica");
 
 				    }, function(response) {
 						console.log("Error");
@@ -69,6 +70,7 @@ app.controller('ucilnicaPageController', [
 	'$scope', '$http', '$location', '$rootScope',
 	function($scope, $http, $location, $rootScope) {
 
+	$scope.users = $rootScope.users;
 
 
 }]);

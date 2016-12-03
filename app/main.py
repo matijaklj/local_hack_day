@@ -26,13 +26,15 @@ class User(db.Model):
     email = db.Column(db.String, nullable=False)
     password = db.Column(db.String, default="root")
     is_teacher = db.Column(db.Boolean, default=False)
+    mac = db.Column(db.String, default=False)
 
-    def __init__(self, username, password, name, email, role=False):
+    def __init__(self, username, password, name, email, mac, role=False):
         self.username = username
         self.password = password
         self.name = name
         self.email = email
         self.role = role
+        self.mac = mac
 
 class Ucilnica(db.Model):
     __tablename__ = "classroom"
@@ -133,11 +135,34 @@ def get_conected_users():
     }
 
     ucilnice = {}
+    devices = []
+    users = {}
 
     if request.method == 'POST':
+        
+        post_request = json.loads(request.data.decode())
+        classroom_q = Ucilnica.query.filter(
+            Ucilnica.name == post_request.get("name"))
+        classrooms = classroom_q.all()
+        for classroom in classrooms:
+            file = open("/tmp/active_devices")
+            for line in file.readlines():
+                devices.append(line.replace("\n", ""))
 
-        request_data = json.loads(request.data.decode())
-        classroom_name = request_data["name"]
+        for i, device in enumerate(devices):
+            user = User.query.filter(User.mac == device).first()
+            if not user:
+                del devices[i]
+            else:
+                users[user.username] = {
+                    'name': user.name, 
+                    'username': user.username, 
+                    'email': user.email}
+
+        response = {
+            'success': True,
+            'users': users
+        }
 
     else:
         ucilnica_q = Ucilnica.query.all()
@@ -147,7 +172,6 @@ def get_conected_users():
             'success': True,
             'ucilnice': ucilnice
         }
-
 
     return jsonify(response), 200
 
