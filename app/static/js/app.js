@@ -51,7 +51,7 @@ app.controller('ucilnicePageController', [
 		$scope.displayUcilnica = function(ime) {
 				console.log(ime);
 
-
+				$location.path("/ucilnica");
 				$http.post(url, {'name': ime})
 				    .then(function(response) {
 

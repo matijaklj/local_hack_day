@@ -56,7 +56,7 @@ def login():
         'success': False,
         'message': ''
     }
-    
+
     # Login authentication
     if request.method == 'POST':
         login_user = request.form.get('data.username', type=str)
@@ -71,7 +71,7 @@ def login():
         if user_q:
             if login_user != user_q.username or \
                 login_password != user_q.password:
-    
+
                 error = 'You shall not pass'
                 response['message'] = error
                 return render_template("login.html", response=response)
@@ -94,7 +94,7 @@ def index():
         'success': False,
         'message': ''
     }
-    
+
     # Login authentication
     if request.method == 'POST':
         print "We are in index post"
@@ -110,7 +110,7 @@ def index():
         if user_q:
             if login_user != user_q.username or \
                 login_password != user_q.password:
-    
+
                 error = 'You shall not pass'
                 response['message'] = error
             else:
@@ -126,7 +126,7 @@ def index():
 # Get user status
 @app.route("/devices", methods=["POST", "GET"])
 def get_conected_users():
-
+    
     response = {
         'success': False,
         'data': {}
@@ -135,7 +135,7 @@ def get_conected_users():
     ucilnice = {}
 
     if request.method == 'POST':
-        
+
         request_data = json.loads(request.data.decode())
         classroom_name = request_data["name"]
 
