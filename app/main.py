@@ -41,7 +41,6 @@ class Ucilnica(db.Model):
     name = db.Column(db.String, nullable=False)
     opis = db.Column(db.String, nullable=False)
     ip = db.Column(db.String, nullable=False)
-    zasedenost = db.Column(db.String, nullable=False)
 
     def __init__(self, name, opis, ip):
         self.name = name
@@ -123,6 +122,7 @@ def index():
 
     return jsonify(response), 200
 
+
 # Get user status
 @app.route("/devices", methods=["POST", "GET"])
 def get_conected_users():
@@ -138,11 +138,11 @@ def get_conected_users():
         
         request_data = json.loads(request.data.decode())
         classroom_name = request_data["name"]
-        
+
     else:
         ucilnica_q = Ucilnica.query.all()
         for ucilnica in ucilnica_q:
-            ucilnice[ucilnica.name] = {'opis': ucilnica.opis, 'ip':ucilnica.ip}
+            ucilnice[ucilnica.name] = { 'opis': ucilnica.opis, 'ip':ucilnica.ip }
         response = {
             'success': True,
             'ucilnice': ucilnice
@@ -150,8 +150,6 @@ def get_conected_users():
 
 
     return jsonify(response), 200
-
-
 
 if __name__ == "__main__":
      app.run()
