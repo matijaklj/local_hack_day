@@ -34,6 +34,20 @@ class User(db.Model):
         self.password = password
         self.role = role
 
+class Ucilnica(db.Model):
+    __tablename__ = "classroom"
+
+    id = db.Column(db.String, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    opis = db.Column(db.String, nullable=False)
+    ip = db.Column(db.String, nullable=False)
+
+    def __init__(self, name):
+        self.name = name
+        self.opis = opis
+        self.ip = ip
+
+
 @app.route("/login", methods=["POST", "GET"])
 def login():
     response = {
@@ -58,20 +72,16 @@ def login():
     
                 error = 'You shall not pass'
                 response['message'] = error
-                print "Here1"
                 return render_template("login.html", response=response)
             else:
                 response['message'] = "OK"
                 response['success'] = True
                 # Load index
-                print "Here2"
                 return render_template("index.html", response=response)
         else:
-            print "Here3"
             response['message'] = 'User does not exist'
             return render_template("login.html", response=response)
 
-    print "Here4"
     # Get request, load login
     return render_template("login.html", response=response)
 
@@ -109,6 +119,28 @@ def index():
             response['message'] = 'User does not exist'
 
     return jsonify(response), 200
+
+# Get user status
+@app.route("/index", methods=["POST", "GET"])
+def get_conected_users():
+
+    response = {
+        'success': False,
+        'data': None
+    }
+
+    if request.method == 'POST':
+        post_request = json.loads(request.data.decode())
+        user_mac = post_request.get('data').get('mac')
+        
+
+
+    return jsonify(response), 200
+
+
+def get_conected_users_from_device(mac):
+
+
 
 if __name__ == "__main__":
      app.run()
