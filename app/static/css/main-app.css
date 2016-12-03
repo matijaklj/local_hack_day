@@ -10,6 +10,10 @@
     flex-wrap: wrap;
 }
 
+.panel-ucilnice {
+    margin-left: 10px;
+    margin-right: 10px;
+}
 .ucilnica-div  {
     margin-left: 20px;
     margin-bottom: 20px;
