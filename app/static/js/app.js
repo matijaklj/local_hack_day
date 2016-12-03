@@ -33,20 +33,31 @@ app.controller('ucilnicePageController', [
 	'$scope', '$http', '$location', '$rootScope',
 	function($scope, $http, $location, $rootScope) {
 
+		$scope.ucilnice = {};
+
+		$scope.base_url = 'http://' + document.domain + ':' + location.port;
+		var url = $scope.base_url + '/devices';
+
+		$http.get(url)
+	    .then(function(response) {
+	        $scope.ucilnice = response.data.ucilnice;
+	        console.log($scope.ucilnice);
+
+	    }, function(response) {
+			console.log("Error");
+		});
+
 		$scope.displayUcilnica = function(ime) {
 				console.log(ime);
 
-				$scope.base_url = 'http://' + document.domain + ':' + location.port;
-				var url = $scope.base_url + '/devices';
-
-				$http.post(url, { 'name': ime })
+				$http.post(url, {'name': ime})
 				    .then(function(response) {
-				        //$scope.content = response.data;
+				        
 
 						$location.path("/ucilnica");
 
 				    }, function(response) {
-						//error
+						console.log("Error");
 					});
 
 

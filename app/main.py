@@ -29,20 +29,21 @@ class User(db.Model):
 
     def __init__(self, username, password, name, email, role=False):
         self.username = username
+        self.password = password
         self.name = name
         self.email = email
-        self.password = password
         self.role = role
 
 class Ucilnica(db.Model):
     __tablename__ = "classroom"
 
-    id = db.Column(db.String, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     opis = db.Column(db.String, nullable=False)
     ip = db.Column(db.String, nullable=False)
+    zasedenost = db.Column(db.String, nullable=False)
 
-    def __init__(self, name):
+    def __init__(self, name, opis, ip):
         self.name = name
         self.opis = opis
         self.ip = ip
@@ -50,6 +51,8 @@ class Ucilnica(db.Model):
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
+
+
     response = {
         'success': False,
         'message': ''
@@ -121,18 +124,29 @@ def index():
     return jsonify(response), 200
 
 # Get user status
-@app.route("/index", methods=["POST", "GET"])
+@app.route("/devices", methods=["POST", "GET"])
 def get_conected_users():
 
     response = {
         'success': False,
-        'data': None
+        'data': {}
     }
 
-    if request.method == 'POST':
-        post_request = json.loads(request.data.decode())
-        user_mac = post_request.get('data').get('mac')
+    ucilnice = {}
 
+    if request.method == 'POST':
+        
+        request_data = json.loads(request.data.decode())
+        classroom_name = request_data["name"]
+        
+    else:
+        ucilnica_q = Ucilnica.query.all()
+        for ucilnica in ucilnica_q:
+            ucilnice[ucilnica.name] = {'opis': ucilnica.opis, 'ip':ucilnica.ip}
+        response = {
+            'success': True,
+            'ucilnice': ucilnice
+        }
 
 
     return jsonify(response), 200

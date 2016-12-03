@@ -5,12 +5,12 @@
         </div>
     </div>
     <div class="ucilnice-container">
-        <div class="ucilnica-div" ng-click="displayUcilnica(u.ime)" ng-repeat="u in ucilnice" >
+        <div class="ucilnica-div" ng-click="displayUcilnica(u.ime)" ng-repeat="(name, value) in ucilnice" >
             <img class="ucilnica-img" src="static/img/predavalnica.jpg" alt="slika ucilnice" />
             <div class="ucilnica-body">
-                <h1>{$u.ime$}</h1>
-                <label>{$u.opis$}</label>
-                <label>Prisotnih studentov: {$u.steviloPrisotnih$}</label>
+                <h1>{$ name $}</h1>
+                <label>{$ value.opis $}</label>
+                <label>Prisotnih studentov: 14</label>
             </div>
         </div>
     </div>
