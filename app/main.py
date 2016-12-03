@@ -43,11 +43,11 @@ def login():
     
     # Login authentication
     if request.method == 'POST':
-        post_request = json.loads(request.data.decode())
-        user = post_request.get('data')
-        login_user = user.get("username")
-        login_password = user.get("password")
+        login_user = request.form.get('data.username', type=str)
+        login_password = request.form.get('data.password', type=str)
 
+        print login_password
+        print login_user
         # make query to db
         user_q = User.query.filter(
             User.username  == str(login_user)).first()
@@ -58,17 +58,22 @@ def login():
     
                 error = 'You shall not pass'
                 response['message'] = error
+                print "Here1"
+                return render_template("login.html", response=response)
             else:
                 response['message'] = "OK"
                 response['success'] = True
+                # Load index
+                print "Here2"
+                return render_template("index.html", response=response)
         else:
+            print "Here3"
             response['message'] = 'User does not exist'
+            return render_template("login.html", response=response)
 
-        # Load index
-        return render_template("index.html")
-
+    print "Here4"
     # Get request, load login
-    return render_template("login.html")
+    return render_template("login.html", response=response)
 
 @app.route("/index", methods=["POST", "GET"])
 def index():
@@ -80,6 +85,7 @@ def index():
     
     # Login authentication
     if request.method == 'POST':
+        print "We are in index post"
         post_request = json.loads(request.data.decode())
         user = post_request.get('data')
         login_user = user.get("username")
