@@ -29,3 +29,27 @@
     width: 100%;
     height: 130px;
 }
+
+.ucilnica-header {
+    background-color: #2cb211;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.ucilnica-header-img {
+    margin: 0 auto;
+}
+
+.ucilnica-content {
+    background-color: lightgray;
+}
+
+.text {
+    text-align: center;
+}
+
+.student {
+    background-color: white;
+    padding: 5px 5px;
+    margin: 10px 10px;
+}

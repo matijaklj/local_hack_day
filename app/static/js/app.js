@@ -36,6 +36,7 @@ app.controller('ucilnicePageController', [
 		$scope.ucilnice = {};
 
 		$scope.base_url = 'http://' + document.domain + ':' + location.port;
+
 		var url = $scope.base_url + '/devices';
 
 		$http.get(url)
@@ -50,9 +51,9 @@ app.controller('ucilnicePageController', [
 		$scope.displayUcilnica = function(ime) {
 				console.log(ime);
 
+
 				$http.post(url, {'name': ime})
 				    .then(function(response) {
-				        
 
 						$location.path("/ucilnica");
 
@@ -60,66 +61,15 @@ app.controller('ucilnicePageController', [
 						console.log("Error");
 					});
 
-
 		};
 
-		$scope.ucilnice = [
-		  {
-		    "ime": "P01",
-		    "opis": "velika predavalnica 1",
-			"steviloPrisotnih": 86
-		  },
-		  {
-		    "ime": "P3",
-		    "opis": "mala predavalnica 3",
-			"steviloPrisotnih": 6
-		  },
-		  {
-		    "ime": "P4",
-		    "opis": "mala predavalnica 3",
-			"steviloPrisotnih": 12
-		  },
-		  {
-		    "ime": "P5",
-		    "opis": "mala predavalnica 3",
-			"steviloPrisotnih": 15
-		  },
-		  {
-		    "ime": "P6",
-		    "opis": "mala predavalnica 3",
-			"steviloPrisotnih": 17
-		  },
-		  {
-		    "ime": "P3",
-		    "opis": "mala predavalnica 3",
-			"steviloPrisotnih": 20
-		  },
-		  {
-		    "ime": "P4",
-		    "opis": "mala predavalnica 3",
-			"steviloPrisotnih": 22
-		  },
-		  {
-		    "ime": "P5",
-		    "opis": "mala predavalnica 3",
-			"steviloPrisotnih": 12
-		  },
-		  {
-		    "ime": "P3",
-		    "opis": "mala predavalnica 3",
-			"steviloPrisotnih": 12
-		  },
-		  {
-		    "ime": "P4",
-		    "opis": "mala predavalnica 3",
-			"steviloPrisotnih": 12
-		  },
-		  {
-		    "ime": "P5",
-		    "opis": "mala predavalnica 3",
-			"steviloPrisotnih": 12
-		  }
-		];
+}]);
+
+app.controller('ucilnicaPageController', [
+	'$scope', '$http', '$location', '$rootScope',
+	function($scope, $http, $location, $rootScope) {
+
+
 
 }]);
 
@@ -128,13 +78,9 @@ app.controller('indexPageController', [
 	function($scope, $http, $location, $rootScope) {
 		//$location.path("/ucilnice")
 
-		$scope.linkTo = function() {
-				$location.path("/ucilnica");
+		$scope.linkToUcilnice = function() {
+				$location.path("/ucilnice");
 		};
 
-		$scope.display = function() {
-				console.log("laalal");
-				//$location.path("/ucilnica");
-		};
 
 }]);
