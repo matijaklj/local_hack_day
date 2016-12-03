@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="ucilnice-container">
-        <div class="ucilnica-div" ng-click="display()" ng-repeat="u in ucilnice" >
+        <div class="ucilnica-div" ng-click="display(u.ime)" ng-repeat="u in ucilnice" >
             <img class="ucilnica-img" src="static/img/predavalnica.jpg" alt="slika ucilnice" />
             <div class="ucilnica-body">
                 <h1>{$u.ime$}</h1>
