@@ -57,9 +57,13 @@
         <div class="panel panel-default col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
             <div class="panel-body">
                 <form class="login-form" method="post">
-                    <input type="text" name="data.username" placeholder="username" value/>
-                    <input name="data.password" type="password" placeholder="password"/>
-                    <button class="btn btn-default" type="submit">LOGIN</button>
+                    <div class="form-group">
+						<input class="form-control" type="text" name="data.username" placeholder="username" value/>
+					</div>
+					<div class="form-group">
+                    	<input class="form-control" name="data.password" type="password" placeholder="password"/>
+					</div>
+                    <button class="btn btn-default pull-right" type="submit">LOGIN</button>
                 </form>
             </div>
 

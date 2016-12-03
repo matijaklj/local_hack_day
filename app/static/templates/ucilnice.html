@@ -1,0 +1,17 @@
+<div ng-controller="ucilnicePageController">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h2>Ucilnice</h2>
+        </div>
+    </div>
+    <div class="ucilnice-container">
+        <div class="ucilnica-div" ng-click="display()" ng-repeat="u in ucilnice" >
+            <img class="ucilnica-img" src="static/img/predavalnica.jpg" alt="slika ucilnice" />
+            <div class="ucilnica-body">
+                <h1>{$u.ime$}</h1>
+                <label>{$u.opis$}</label>
+                <label>Prisotnih studentov: {$u.steviloPrisotnih$}</label>
+            </div>
+        </div>
+    </div>
+</div>
