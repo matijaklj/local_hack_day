@@ -34,7 +34,38 @@ class User(db.Model):
         self.email = email
         self.role = role
 
-@app.route("/", methods=["POST", "GET"])
+@app.route("/login", methods=["POST", "GET"])
+def login():
+
+    
+    response = {
+        'success': False,
+        'msg': ''
+    }
+    
+    # Login authentication
+    if request.method == 'POST':
+        post_request = json.loads(request.data.decode())
+        user = post_request.get('user')
+        login_user = request.form.get('user.username', type=str)
+        login_password = request.form.get('user.password', type=str)
+
+        user_q = User.query.filter(
+            User.username  == str(login_user)).first()
+
+        if login_user != user_q.username or \
+            login_password != user_q.password:
+            error = 'You shall not pass'
+            response['msg'] = error
+            return jsonify(response), 504
+    else:
+        return render_template("login.html")
+
+    response['success'] = True
+    response['msg'] = "success"
+    return jsonify(response), 200
+
+@app.route("/index", methods=["POST", "GET"])
 def login():
 
     
